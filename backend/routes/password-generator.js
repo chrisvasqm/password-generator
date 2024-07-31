@@ -1,15 +1,14 @@
 import { Router } from 'express';
 import { z } from 'zod';
 
-const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const upperCases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
 const numbers = '0123456789';
-const special = '!@#$%^&*()_+~`|}{[]\\:;?><,./-=';
+const specials = '!@#$%^&*()_+~`|}{[]\\:;?><,./-=';
 
 const schema = z.object({
   length: z.number().positive().optional(),
   hasUppercase: z.boolean().optional(),
-  hasLowercase: z.boolean().optional(),
   hasNumbers: z.boolean().optional(),
   hasSpecials: z.boolean().optional()
 });
@@ -20,30 +19,29 @@ router.post('/', (request, response) => {
   const validation = schema.safeParse(request.body);
   if (!validation.success) return response.status(400).send(validation.error.format());
 
-  const { length, hasUppercase, hasLowercase, hasNumbers, hasSpecials } = request.body;
+  const { length, hasUppercase, hasNumbers, hasSpecials } = request.body;
 
   const passwordLength = length ?? 8;
 
   let password = '';
 
-  const allChars =
-    hasUppercase ? upperCase : undefined
-      + hasLowercase ? lowerCase : undefined
-        + hasNumbers ? numbers : undefined
-          + hasSpecials ? special : undefined;
+  let allChars = lowerCase;
 
   // Ensure at least one character from each set is included
-  if (hasUppercase)
-    password += upperCase[Math.floor(Math.random() * upperCase.length)];
+  if (hasUppercase) {
+    allChars += upperCases;
+    password += upperCases[Math.floor(Math.random() * upperCases.length)];
+  }
 
-  if (hasLowercase)
-    password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
-
-  if (hasNumbers)
+  if (hasNumbers) {
+    allChars += numbers;
     password += numbers[Math.floor(Math.random() * numbers.length)];
+  }
 
-  if (hasSpecials)
-    password += special[Math.floor(Math.random() * special.length)];
+  if (hasSpecials) {
+    allChars += specials;
+    password += specials[Math.floor(Math.random() * specials.length)];
+  }
 
   // Fill the rest of the password length with random characters from all sets
   for (let i = password.length; i < passwordLength; i++) {
