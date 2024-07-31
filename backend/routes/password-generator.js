@@ -5,10 +5,10 @@ const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
 const numbers = '0123456789';
 const special = '!@#$%^&*()_+~`|}{[]\\:;?><,./-=';
-const allChars = upperCase + lowerCase + numbers + special;
 
 const schema = z.object({
-  length: z.number().positive().optional()
+  length: z.number().positive().optional(),
+  hasUppercase: z.boolean().optional()
 });
 
 const router = Router();
@@ -17,14 +17,22 @@ router.post('/', (request, response) => {
   const validation = schema.safeParse(request.body);
   if (!validation.success) return response.status(400).send(validation.error.format());
 
-  const { length } = request.body;
+  const { length, hasUppercase } = request.body;
 
   const passwordLength = length ?? 8;
 
   let password = '';
 
+  const allChars =
+    hasUppercase ? upperCase : undefined
+      + lowerCase
+      + numbers
+      + special;
+
   // Ensure at least one character from each set is included
-  password += upperCase[Math.floor(Math.random() * upperCase.length)];
+  if (hasUppercase)
+    password += upperCase[Math.floor(Math.random() * upperCase.length)];
+
   password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
   password += numbers[Math.floor(Math.random() * numbers.length)];
   password += special[Math.floor(Math.random() * special.length)];
