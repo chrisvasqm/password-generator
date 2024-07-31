@@ -9,7 +9,8 @@ const special = '!@#$%^&*()_+~`|}{[]\\:;?><,./-=';
 const schema = z.object({
   length: z.number().positive().optional(),
   hasUppercase: z.boolean().optional(),
-  hasLowercase: z.boolean().optional()
+  hasLowercase: z.boolean().optional(),
+  hasNumbers: z.boolean().optional()
 });
 
 const router = Router();
@@ -18,7 +19,7 @@ router.post('/', (request, response) => {
   const validation = schema.safeParse(request.body);
   if (!validation.success) return response.status(400).send(validation.error.format());
 
-  const { length, hasUppercase, hasLowercase } = request.body;
+  const { length, hasUppercase, hasLowercase, hasNumbers } = request.body;
 
   const passwordLength = length ?? 8;
 
@@ -27,7 +28,7 @@ router.post('/', (request, response) => {
   const allChars =
     hasUppercase ? upperCase : undefined
       + hasLowercase ? lowerCase : undefined
-      + numbers
+        + hasNumbers ? numbers : undefined
     + special;
 
   // Ensure at least one character from each set is included
@@ -37,7 +38,9 @@ router.post('/', (request, response) => {
   if (hasLowercase)
     password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
 
-  password += numbers[Math.floor(Math.random() * numbers.length)];
+  if (hasNumbers)
+    password += numbers[Math.floor(Math.random() * numbers.length)];
+
   password += special[Math.floor(Math.random() * special.length)];
 
   // Fill the rest of the password length with random characters from all sets
