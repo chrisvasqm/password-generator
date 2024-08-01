@@ -4,7 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import passwordGenerator from './routes/password-generator.js';
-import errorMiddleware from './middlewares/errorMiddleware.js';
+import errorMiddleware from './middlewares/error-middleware.js';
 
 const app = express();
 
