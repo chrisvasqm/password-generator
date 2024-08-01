@@ -3,7 +3,7 @@ import 'express-async-errors';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import passwordGenerator from './routes/password-generator.js';
+import passwordRouter from './routes/password-generator.js';
 import errorMiddleware from './middlewares/error-middleware.js';
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 
-app.use('/api/generate-password', passwordGenerator);
+app.use('/api/generate-password', passwordRouter);
 
 app.use(errorMiddleware);
 
