@@ -1,9 +1,11 @@
+import { Flex } from '@radix-ui/themes';
+import PasswordGenerator from './components/PasswordGenerator';
 
 function App() {
   return (
-    <>
-      <h1>App</h1>
-    </>
+    <Flex justify={'center'} align={'center'} height={'80vh'}>
+      <PasswordGenerator />
+    </Flex>
   )
 }
 
