@@ -8,9 +8,9 @@ const specials = '!@#$%^&*()_+~`|}{[]\\:;?><,./-=';
 
 const schema = z.object({
   length: z.number().positive().optional(),
-  hasUppercase: z.boolean().optional(),
-  hasNumbers: z.boolean().optional(),
-  hasSpecials: z.boolean().optional()
+  includeUppercase: z.boolean().optional(),
+  includeNumbers: z.boolean().optional(),
+  includeSpecials: z.boolean().optional()
 });
 
 const router = Router();
@@ -19,7 +19,7 @@ router.post('/', (request, response) => {
   const validation = schema.safeParse(request.body);
   if (!validation.success) return response.status(400).send(validation.error.format());
 
-  const { length, hasUppercase, hasNumbers, hasSpecials } = request.body;
+  const { length, includeUppercase, includeNumbers, includeSpecials } = request.body;
 
   const passwordLength = length ?? 8;
 
@@ -28,17 +28,17 @@ router.post('/', (request, response) => {
   let allChars = lowerCase;
 
   // Ensure at least one character from each set is included
-  if (hasUppercase) {
+  if (includeUppercase) {
     allChars += upperCases;
     password += upperCases[Math.floor(Math.random() * upperCases.length)];
   }
 
-  if (hasNumbers) {
+  if (includeNumbers) {
     allChars += numbers;
     password += numbers[Math.floor(Math.random() * numbers.length)];
   }
 
-  if (hasSpecials) {
+  if (includeSpecials) {
     allChars += specials;
     password += specials[Math.floor(Math.random() * specials.length)];
   }
