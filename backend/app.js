@@ -4,6 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import passwordGenerator from './routes/password-generator.js';
+import errorMiddleware from './middlewares/errorMiddleware.js';
 
 const app = express();
 
@@ -13,11 +14,7 @@ app.use(helmet());
 
 app.use('/api/generate-password', passwordGenerator);
 
-app.use((error, request, response, next) => {
-  console.error(error.stack);
-
-  response.status(500).send('Something went wrong. Try again later');
-});
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT}`));
