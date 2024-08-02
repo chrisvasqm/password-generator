@@ -7,7 +7,7 @@ const PasswordGenerator = () => {
 
   return (
     <Box width={'50%'}>
-      <Card sx={{padding: 1, boxShadow: 4}}>
+      <Card sx={{paddingY: 2, paddingX: 3, boxShadow: 4, borderRadius: 3}}>
         <form onSubmit={handleSubmit}>
           <Stack gap={1} direction={'column'}>
             <Typography fontSize={24} align='center' marginBottom={2}>Pasword Generator</Typography>
@@ -15,7 +15,7 @@ const PasswordGenerator = () => {
             <TextField id='password-length' type='number' placeholder='How long you want it to be?' variant='outlined' />
 
             <FormGroup>
-              <Stack direction={'row'}>
+              <Stack direction={'row'} justifyContent={'space-between'}>
                 <FormControlLabel control={<Checkbox defaultChecked />} label="Uppercase" />
                 <FormControlLabel control={<Checkbox />} label="Numbers" />
                 <FormControlLabel control={<Checkbox />} label="Specials" />

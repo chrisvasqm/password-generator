@@ -3,7 +3,12 @@ import PasswordGenerator from './components/PasswordGenerator';
 
 function App() {
   return (
-    <Container>
+    <Container sx={{
+      height: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
       <PasswordGenerator />
     </Container>
   )
