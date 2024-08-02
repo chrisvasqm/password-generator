@@ -1,5 +1,4 @@
-import { Box, Button, Card, CheckboxGroup, Flex, Heading, TextField } from '@radix-ui/themes';
-import React from 'react';
+import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from '@mui/material';
 
 const PasswordGenerator = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -7,33 +6,31 @@ const PasswordGenerator = () => {
   };
 
   return (
-    <Box width={'40%'}>
-      <Card>
+    <Box width={'50%'}>
+      <Card sx={{padding: 1, boxShadow: 4}}>
         <form onSubmit={handleSubmit}>
-          <Flex gap={'2'} direction={'column'}>
-            <Heading>Pasword Generator</Heading>
+          <Stack gap={1} direction={'column'}>
+            <Typography fontSize={24} align='center' marginBottom={2}>Pasword Generator</Typography>
 
-            <TextField.Root placeholder='How long should it be?'>
-              <TextField.Slot></TextField.Slot>
-            </TextField.Root>
+            <TextField id='password-length' type='number' placeholder='How long you want it to be?' variant='outlined' />
 
-            <CheckboxGroup.Root defaultValue={['']} name='example'>
-              <Flex justify={'center'} gap={'6'}>
-                <CheckboxGroup.Item value='1'>Uppercase</CheckboxGroup.Item>
-                <CheckboxGroup.Item value='2'>Numbers</CheckboxGroup.Item>
-                <CheckboxGroup.Item value='3'>Specials</CheckboxGroup.Item>
-              </Flex>
-            </CheckboxGroup.Root>
-            
+            <FormGroup>
+              <Stack direction={'row'}>
+                <FormControlLabel control={<Checkbox defaultChecked />} label="Uppercase" />
+                <FormControlLabel control={<Checkbox />} label="Numbers" />
+                <FormControlLabel control={<Checkbox />} label="Specials" />
+              </Stack>
+            </FormGroup>
+
             <Button>Generate</Button>
-          </Flex>
+          </Stack>
         </form>
       </Card>
 
-      <Heading mt={'2'} align={'center'}>
+      <Typography align='center' marginTop={1}>
         S4mple!@#
-      </Heading>
-    </Box>
+      </Typography>
+    </Box >
   );
 };
 
