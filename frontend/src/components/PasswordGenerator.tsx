@@ -8,6 +8,7 @@ const PasswordGenerator = () => {
   const [length, setLength] = useState(8);
   const [includeUppercase, setIncludeUppercase] = useState(false);
   const [includeNumbers, setIncludeNumbers] = useState(false);
+  const [includeSpecials, setIncludeSpecials] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +16,8 @@ const PasswordGenerator = () => {
     const data = {
       length,
       includeUppercase,
-      includeNumbers
+      includeNumbers,
+      includeSpecials
     };
     try {
       const response = await axios.post('http://localhost:3000/api/generate-password', data);
@@ -46,6 +48,7 @@ const PasswordGenerator = () => {
 
             <FormGroup>
               <Stack direction={'row'} justifyContent={'space-between'}>
+
                 <FormControlLabel
                   label="Uppercase"
                   control={
@@ -59,7 +62,12 @@ const PasswordGenerator = () => {
                     checked={includeNumbers}
                     onChange={() => setIncludeNumbers(!includeNumbers)} />} />
 
-                <FormControlLabel control={<Checkbox />} label="Specials" />
+                <FormControlLabel
+                  label="Specials"
+                  control={<Checkbox
+                    checked={includeSpecials}
+                    onChange={() => setIncludeSpecials(!includeSpecials)} />} />
+
               </Stack>
             </FormGroup>
 
