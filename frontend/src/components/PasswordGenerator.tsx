@@ -44,6 +44,7 @@ const PasswordGenerator = () => {
               marginBottom={2}>Pasword Generator</Typography>
 
             <TextField
+              label='Length'
               id='password-length'
               type='number'
               variant='outlined'
