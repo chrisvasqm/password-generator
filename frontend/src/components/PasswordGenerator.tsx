@@ -29,7 +29,7 @@ const PasswordGenerator = () => {
   };
 
   return (
-    <Box width={'50%'}>
+    <Box minWidth={'300px'}>
       <Card sx={{ paddingY: 2, paddingX: 3, boxShadow: 4, borderRadius: 3 }}>
         <form onSubmit={handleSubmit}>
           <Stack gap={1} direction={'column'}>
