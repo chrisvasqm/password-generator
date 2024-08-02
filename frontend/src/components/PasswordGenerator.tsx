@@ -8,12 +8,8 @@ const PasswordGenerator = () => {
   const [length, setLength] = useState(8);
   const [includeUppercase, setIncludeUppercase] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleGenerate();
-  };
-
-  const handleGenerate = async () => {
     const data = {
       length,
       includeUppercase
@@ -26,7 +22,7 @@ const PasswordGenerator = () => {
       if (error instanceof AxiosError) toast(error.response?.data);
       else toast('Unkown error');
     }
-  }
+  };
 
   return (
     <Box width={'50%'}>
