@@ -91,9 +91,14 @@ const PasswordGenerator = () => {
         </form>
       </Card>
 
-      <Typography align='center' marginTop={1}>
+      <Typography
+        align='center'
+        marginTop={1}
+        overflow={'auto'}
+        sx={{ wordBreak: 'break-all' }}>
         {password}
       </Typography>
+
     </Box >
   );
 };
