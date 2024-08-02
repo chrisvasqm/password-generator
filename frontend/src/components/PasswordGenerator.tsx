@@ -1,4 +1,4 @@
-import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography, useStepperContext } from '@mui/material';
+import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -7,14 +7,16 @@ const PasswordGenerator = () => {
   const [password, setPassword] = useState('S4mple!@#');
   const [length, setLength] = useState(8);
   const [includeUppercase, setIncludeUppercase] = useState(false);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = {
       length,
-      includeUppercase
+      includeUppercase,
+      includeNumbers
     };
-
     try {
       const response = await axios.post('http://localhost:3000/api/generate-password', data);
       setPassword(response.data);
@@ -45,13 +47,17 @@ const PasswordGenerator = () => {
             <FormGroup>
               <Stack direction={'row'} justifyContent={'space-between'}>
                 <FormControlLabel
+                  label="Uppercase"
                   control={
                     <Checkbox
                       checked={includeUppercase}
-                      onChange={() => setIncludeUppercase(!includeUppercase)} />}
-                  label="Uppercase" />
+                      onChange={() => setIncludeUppercase(!includeUppercase)} />} />
 
-                <FormControlLabel control={<Checkbox />} label="Numbers" />
+                <FormControlLabel
+                  label="Numbers"
+                  control={<Checkbox
+                    checked={includeNumbers}
+                    onChange={() => setIncludeNumbers(!includeNumbers)} />} />
 
                 <FormControlLabel control={<Checkbox />} label="Specials" />
               </Stack>
