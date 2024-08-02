@@ -48,6 +48,10 @@ const PasswordGenerator = () => {
               type='number'
               variant='outlined'
               placeholder='How long you want it to be?'
+              inputProps={{
+                min: 0,
+                max: 100
+              }}
               onChange={e => setLength(parseInt(e.target.value))} />
 
             <FormGroup>
