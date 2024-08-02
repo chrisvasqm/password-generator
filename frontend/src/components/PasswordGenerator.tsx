@@ -1,4 +1,4 @@
-import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography, useStepperContext } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -14,8 +14,13 @@ const PasswordGenerator = () => {
   };
 
   const handleGenerate = async () => {
+    const data = {
+      length,
+      includeUppercase
+    };
+
     try {
-      const response = await axios.post('http://localhost:3000/api/generate-password', { length, includeUppercase });
+      const response = await axios.post('http://localhost:3000/api/generate-password', data);
       setPassword(response.data);
     } catch (error: unknown) {
       if (error instanceof AxiosError) toast(error.response?.data);
@@ -49,9 +54,9 @@ const PasswordGenerator = () => {
                       checked={includeUppercase}
                       onChange={() => setIncludeUppercase(!includeUppercase)} />}
                   label="Uppercase" />
-                
+
                 <FormControlLabel control={<Checkbox />} label="Numbers" />
-                
+
                 <FormControlLabel control={<Checkbox />} label="Specials" />
               </Stack>
             </FormGroup>
