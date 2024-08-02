@@ -1,4 +1,5 @@
-import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, IconButton, Stack, TextField, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -31,6 +32,15 @@ const PasswordGenerator = () => {
       else toast('Unkown error');
     }
   };
+
+  const handleCopy = () => {
+    try {
+      navigator.clipboard.writeText(password);
+      toast('Password copied to clipboard');
+    } catch (error) {
+      toast('Error copying to clipboard');
+    }
+  }
 
   return (
     <Box minWidth={'300px'} maxWidth={'400px'} overflow={'scroll'} padding={2}>
@@ -80,12 +90,19 @@ const PasswordGenerator = () => {
               </Stack>
             </FormGroup>
 
-            <Button
-              type='submit'
-              variant='contained'
-              disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Generate'}
-            </Button>
+            <Stack direction={'row'} justifyContent={'space-between'}>
+              <Button
+                fullWidth
+                type='submit'
+                variant='contained'
+                disabled={isLoading}>
+                {isLoading ? 'Loading...' : 'Generate'}
+              </Button>
+
+              <IconButton onClick={() => handleCopy()}>
+                <ContentCopyIcon />
+              </IconButton>
+            </Stack>
 
           </Stack>
         </form>
