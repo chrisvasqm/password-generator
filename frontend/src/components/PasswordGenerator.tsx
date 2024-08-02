@@ -9,6 +9,7 @@ const PasswordGenerator = () => {
   const [includeUppercase, setIncludeUppercase] = useState(false);
   const [includeNumbers, setIncludeNumbers] = useState(false);
   const [includeSpecials, setIncludeSpecials] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,9 +21,12 @@ const PasswordGenerator = () => {
       includeSpecials
     };
     try {
+      setIsLoading(true);
       const response = await axios.post('http://localhost:3000/api/generate-password', data);
+      setIsLoading(false);
       setPassword(response.data);
     } catch (error: unknown) {
+      setIsLoading(false);
       if (error instanceof AxiosError) toast(error.response?.data);
       else toast('Unkown error');
     }
@@ -71,7 +75,12 @@ const PasswordGenerator = () => {
               </Stack>
             </FormGroup>
 
-            <Button type='submit'>Generate</Button>
+            <Button
+              type='submit'
+              variant='contained'
+              disabled={isLoading}>
+              {isLoading ? 'Loading...' : 'Generate'}
+            </Button>
 
           </Stack>
         </form>
