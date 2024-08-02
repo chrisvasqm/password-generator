@@ -1,6 +1,7 @@
 import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from '@mui/material';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 const PasswordGenerator = () => {
   const [password, setPassword] = useState('S4mple!@#');
@@ -10,8 +11,13 @@ const PasswordGenerator = () => {
   };
 
   const handleGenerate = async () => {
-    const response = await axios.post('http://localhost:3000/api/generate-password', {});
-    setPassword(response.data);
+    try {
+      const response = await axios.post('http://localhost:3000/api/generate-password', {length: -1});
+      setPassword(response.data);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) toast(error.response?.data);
+      else toast('Unkown error');
+    }
   }
 
   return (
