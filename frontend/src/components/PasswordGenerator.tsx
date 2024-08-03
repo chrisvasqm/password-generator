@@ -1,5 +1,5 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, IconButton, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, Checkbox, FormControlLabel, FormGroup, IconButton, Slider, Stack, TextField, Typography } from '@mui/material';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -53,17 +53,16 @@ const PasswordGenerator = () => {
               align='center'
               marginBottom={2}>Pasword Generator</Typography>
 
-            <TextField
-              label='Length'
-              id='password-length'
-              type='number'
-              variant='outlined'
-              placeholder='How long you want it to be?'
-              inputProps={{
-                min: 0,
-                max: 100
-              }}
-              onChange={e => setLength(parseInt(e.target.value))} />
+            <Typography>
+              Length
+            </Typography>
+
+            <Slider
+              defaultValue={length}
+              onChange={(_, value) => setLength(Number(value))}
+              min={1}
+              aria-label="Length"
+              valueLabelDisplay="auto" />
 
             <FormGroup>
               <Stack direction={'row'} justifyContent={'space-between'}>
